@@ -27,7 +27,7 @@ ms.author: maghan
 ms.reviewer: ""
 ms.custom: seo-lt-2019
 ms.date: 09/11/2020
-monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||=sqlallproducts-allversions||>=sql-server-linux-2017"
+monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||>=sql-server-linux-2017"
 ---
 
 # sqlcmd Utility
@@ -52,7 +52,7 @@ The utility uses ODBC to execute Transact-SQL batches.
 **[![Download sqlcmd for x64](../ssdt/media/download.png) Download Microsoft Command Line Utilities 15 for SQL Server (x64) (2.6 MB)](https://go.microsoft.com/fwlink/?linkid=2142258)**
 <br>**[![Download sqlcmd for x86](../ssdt/media/download.png) Download Microsoft Command Line Utilities 15 for SQL Server (x86) (2.3 MB)](https://go.microsoft.com/fwlink/?linkid=2142257)**
 
-The command line tools are General Availability (GA), however they are being released with the installer package for [!INCLUDE[sql-server-2019](../includes/sssqlv15-md.md)].
+The command line tools are General Availability (GA), however they are being released with the installer package for [!INCLUDE[sql-server-2019](../includes/sssql19-md.md)].
 
 **Version Information**
 
@@ -60,13 +60,13 @@ Release number: 15.0.2<br>
 Build number: 15.0.2000.5<br>
 Release date: September 11, 2020
 
-The new version of SQLCMD supports Azure AD authentication, including Multi-Factor Authentication (MFA) support for SQL Database, SQL Data Warehouse, and Always Encrypted features.
-The new BCP supports Azure AD authentication, including Multi-Factor Authentication (MFA) support for SQL Database and SQL Data Warehouse.
+The new version of SQLCMD supports Azure AD authentication, including Multi-Factor Authentication (MFA) support for SQL Database, Azure Synapse Analytics, and Always Encrypted features.
+The new BCP supports Azure AD authentication, including Multi-Factor Authentication (MFA) support for SQL Database and Azure Synapse Analytics.
 
 **System Requirements**
 Windows 10 , Windows 7, Windows 8, Windows 8.1, Windows Server 2008 - 2019.
 
-This component requires both [Windows Installer 4.5](https://www.microsoft.com/download/details.aspx?id=8483) and [Microsoft ODBC Driver 17 for SQL Server](https://aka.ms/downloadmsodbcsql).
+This component requires both [Windows Installer 4.5](https://windows-installer.soft32.com/) and [Microsoft ODBC Driver 17 for SQL Server](../connect/odbc/download-odbc-driver-for-sql-server.md).
  
 To check the SQLCMD version execute `sqlcmd -?` command and confirm that 15.0.2000.5 version or higher is in use.
 
@@ -98,6 +98,7 @@ sqlcmd
    -c batch_terminator
    -C (trust the server certificate)
    -d db_name
+   -D
    -e (echo input)
    -E (use trusted connection)
    -f codepage | i:codepage[,o:codepage] | o:codepage[,i:codepage]
@@ -144,18 +145,23 @@ sqlcmd
 
 **Login-Related Options**
 
-**-A**
-
+**-A**  
 Signs in to SQL Server  with a Dedicated Administrator Connection (DAC). This kind of connection is used to troubleshoot a server. This connection works only with server computers that support DAC. If DAC is not available, **sqlcmd** generates an error message, and then exits. For more information about DAC, see [Diagnostic Connection for Database Administrators](../database-engine/configure-windows/diagnostic-connection-for-database-administrators.md). The -A option isn't supported with the -G option. When connecting to SQL Database using -A, you must be a SQL server administrator. DAC isn't available for an Azure Active Directory administrator.
 
-**-C**
+**-C**  
 This switch is used by the client to configure it to implicitly trust the server certificate without validation. This option is equivalent to the ADO.NET option `TRUSTSERVERCERTIFICATE = true`.  
 
 **-d** _db_name_  
 Issues a `USE` *db_name* statement when you start **sqlcmd**. This option sets the **sqlcmd** scripting variable SQLCMDDBNAME. This parameter specifies the initial database. The default is your login's default-database property. If the database does not exist, an error message is generated and **sqlcmd** exits.  
 
+**-D**  
+Interprets the server name provided to -S as a DSN instead of a hostname. For more information, see _DSN Support in sqlcmd and bcp_ in [Connecting with sqlcmd](../connect/odbc/linux-mac/connecting-with-sqlcmd.md).
+
+> [!NOTE]
+> The -D option is only available on Linux and MacOS clients. On Windows clients, it previously referred to a now-obsolete option which has been removed and is ignored.
+
 **-l** _login_timeout_  
-Specifies the number of seconds before a **sqlcmd** login to the ODBC driver times out when you try to connect to a server. This option sets the **sqlcmd** scripting variable SQLCMDLOGINTIMEOUT. The default time-out for login to **sqlcmd** is eight seconds. When using the **-G** option to connect to SQL Database or SQL Data Warehouse and authenticate using Azure Active Directory, a timeout value of at least 30 seconds is recommended. The login time-out must be a number between 0 and 65534. If the value supplied is not numeric or does not fall into that range, **sqlcmd** generates an error message. A value of 0 specifies time-out to be infinite.
+Specifies the number of seconds before a **sqlcmd** login to the ODBC driver times out when you try to connect to a server. This option sets the **sqlcmd** scripting variable SQLCMDLOGINTIMEOUT. The default time-out for login to **sqlcmd** is eight seconds. When using the **-G** option to connect to SQL Database or Azure Synapse Analytics and authenticate using Azure Active Directory, a timeout value of at least 30 seconds is recommended. The login time-out must be a number between 0 and 65534. If the value supplied is not numeric or does not fall into that range, **sqlcmd** generates an error message. A value of 0 specifies time-out to be infinite.
 
 **-E**  
 Uses a trusted connection instead of using a user name and password to sign in to SQL Server. By default, without **-E** specified, **sqlcmd** uses the trusted connection option.  
@@ -166,11 +172,11 @@ The **-E** option ignores possible user name and password environment variable s
 Sets the Column Encryption Setting to `Enabled`. For more information, see [Always Encrypted](../relational-databases/security/encryption/always-encrypted-database-engine.md). Only master keys stored in Windows Certificate Store are supported. The -g switch requires at least **sqlcmd** version [13.1](https://go.microsoft.com/fwlink/?LinkID=825643). To determine your version, execute `sqlcmd -?`.
 
 **-G**  
-This switch is used by the client when connecting to SQL Database or SQL Data Warehouse to specify that the user be authenticated using Azure Active Directory authentication. This option sets the **sqlcmd** scripting variable SQLCMDUSEAAD = true. The -G switch requires at least **sqlcmd** version [13.1](https://go.microsoft.com/fwlink/?LinkID=825643). To determine your version, execute `sqlcmd -?`. For more information, see [Connecting to SQL Database or SQL Data Warehouse By Using Azure Active Directory Authentication](/azure/azure-sql/database/authentication-aad-overview). The -A option is not supported with the -G option.
+This switch is used by the client when connecting to SQL Database or Azure Synapse Analytics to specify that the user be authenticated using Azure Active Directory authentication. This option sets the **sqlcmd** scripting variable SQLCMDUSEAAD = true. The -G switch requires at least **sqlcmd** version [13.1](https://go.microsoft.com/fwlink/?LinkID=825643). To determine your version, execute `sqlcmd -?`. For more information, see [Connecting to SQL Database or Azure Synapse Analytics By Using Azure Active Directory Authentication](/azure/azure-sql/database/authentication-aad-overview). The -A option is not supported with the -G option.
 
 > [!IMPORTANT]
 > The `-G` option only applies to Azure SQL Database and Azure Data Warehouse.
-> AAD Interactive Authentication is not currently supported on Linux or macOS. AAD Integrated Authentication requires [Microsoft ODBC Driver 17 for SQL Server](https://aka.ms/downloadmsodbcsql) version 17.6.1 or higher and a properly configured Kerberos environment.
+> AAD Interactive Authentication is not currently supported on Linux or macOS. AAD Integrated Authentication requires [Microsoft ODBC Driver 17 for SQL Server](../connect/odbc/download-odbc-driver-for-sql-server.md) version 17.6.1 or higher and a properly configured Kerberos environment.
 
 - **Azure Active Directory Username and Password:** 
 
@@ -206,9 +212,9 @@ This switch is used by the client when connecting to SQL Database or SQL Data Wa
 
 - **Azure Active Directory Interactive**
 
-    The Azure AD Interactive authentication for Azure SQL Database and SQL Data Warehouse, allows you to use an interactive method supporting multi-factor authentication. For more information, see [Active Directory Interactive Authentication](../ssdt/azure-active-directory.md#active-directory-interactive-authentication). 
+    The Azure AD Interactive authentication for Azure SQL Database and Azure Synapse Analytics, allows you to use an interactive method supporting multi-factor authentication. For more information, see [Active Directory Interactive Authentication](../ssdt/azure-active-directory.md#active-directory-interactive-authentication). 
 
-   Azure AD interactive requires **sqlcmd** [version 15.0.1000.34](#download-the-latest-version-of-sqlcmd-utility) or later as well as [ODBC version 17.2 or later](https://aka.ms/downloadmsodbcsql).  
+   Azure AD interactive requires **sqlcmd** [version 15.0.1000.34](#download-the-latest-version-of-sqlcmd-utility) or later as well as [ODBC version 17.2 or later](../connect/odbc/download-odbc-driver-for-sql-server.md).  
 
    To enable interactive authentication, provide -G option with user name (-U) only, without a password.
 
@@ -408,7 +414,7 @@ We recommend that you use a strong password.
  If **-b** is specified together with this option, **sqlcmd** exits on error. **-b** is described later in this article.  
   
  **-t** _query_timeout_  
- Specifies the number of seconds before a command (or SQL statement) times out. This option sets the **sqlcmd** scripting variable SQLCMDSTATTIMEOUT. If a *time_out* value is not specified, the command does not time out. The *query**time_out* must be a number between 1 and 65534. If the value supplied is not numeric or does not fall into that range, **sqlcmd** generates an error message.  
+ Specifies the number of seconds before a command (or SQL statement) times out. This option sets the **sqlcmd** scripting variable SQLCMDSTATTIMEOUT. If a *time_out* value is not specified, the command does not time out. The *query* *time_out* must be a number between 1 and 65534. If the value supplied is not numeric or does not fall into that range, **sqlcmd** generates an error message.  
   
 > [!NOTE]  
 >  The actual time out value may vary from the specified *time_out* value by several seconds.  
@@ -908,13 +914,21 @@ Use the following practices to help maximize security and efficiency.
 
 - Use integrated security.  
 
-- Use **-X** in automated environments.  
+- Use **-X[1]** in automated environments.
 
 - Secure input and output files by using appropriate NTFS file system permissions.
 
 - To increase performance, do as much in one **sqlcmd** session as you can, instead of in a series of sessions.
 
 - Set time-out values for batch or query execution higher than you expect it will take to execute the batch or query.
+
+Use the following practices to help maximize correctness:
+
+- Use **-V16** to log any [severity 16 level messages](../relational-databases/errors-events/database-engine-error-severities.md#levels-of-severity).  Severity 16 messages indicates general errors that can be corrected by the user.
+
+- Check the exit code and DOS ERRORLEVEL variable after the process has exited.  **sqlcmd** will return 0 normally, otherwise it will set the ERRORLEVEL as configured by **-V**.  In other words, ERRORLEVEL shouldn't be expected to be the same value as the Error Number reported from SQL Server. The Error Number is a SQL Server-specific value corresponding to the system function [**@@ERROR**](../t-sql/functions/error-transact-sql.md).  ERRORLEVEL is a SQLCMD-specific value to indicate why it (i.e. SQLCMD) terminated, and it's value is influenced by specifying **-b** command line argument.
+
+Using **-V16** in combination with checking the exit code and DOS ERRORLEVEL can help catch errors in automated environments, particularly quality gates before a production release.
 
 ## Next steps
 

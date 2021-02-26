@@ -6,7 +6,7 @@ ms.date: "08/04/2017"
 ms.service: sql-database
 ms.prod_service: "sql-database"
 ms.reviewer: ""
-ms.topic: "language-reference"
+ms.topic: "reference"
 f1_keywords: 
   - "sp_set_database_firewall_rule"
   - "sp_set_database_firewall_rule_TSQL"
@@ -20,7 +20,7 @@ helpviewer_keywords:
 ms.assetid: 8f0506b6-a4ac-4e4d-91db-8077c40cb17a
 author: VanMSFT
 ms.author: vanto
-monikerRange: "= azuresqldb-current || = sqlallproducts-allversions"
+monikerRange: "= azuresqldb-current"
 ms.custom: seo-dt-2019
 ---
 # sp_set_database_firewall_rule (Azure SQL Database)
@@ -82,10 +82,9 @@ EXECUTE sp_set_database_firewall_rule N'Example DB Setting 1', '0.0.0.4', '0.0.0
 ```  
   
 ## See Also  
- [Azure SQL Database Firewall](https://azure.microsoft.com/documentation/articles/sql-database-firewall-configure/)   
- [How to: Configure Firewall Settings (Azure SQL Database)](https://azure.microsoft.com/documentation/articles/sql-database-configure-firewall-settings/)   
+ [Azure SQL Database Firewall](/azure/azure-sql/database/firewall-configure)   
+ [How to: Configure Firewall Settings (Azure SQL Database)](/azure/azure-sql/database/firewall-configure)   
  [sp_set_firewall_rule &#40;Azure SQL Database&#41;](../../relational-databases/system-stored-procedures/sp-set-firewall-rule-azure-sql-database.md)   
  [sp_delete_database_firewall_rule &#40;Azure SQL Database&#41;](../../relational-databases/system-stored-procedures/sp-delete-database-firewall-rule-azure-sql-database.md)   
  [sys.database_firewall_rules &#40;Azure SQL Database&#41;](../../relational-databases/system-catalog-views/sys-database-firewall-rules-azure-sql-database.md)  
-  
   

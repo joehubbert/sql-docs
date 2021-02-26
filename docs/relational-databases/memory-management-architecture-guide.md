@@ -26,7 +26,7 @@ helpviewer_keywords:
 ms.assetid: 7b0d0988-a3d8-4c25-a276-c1bdba80d6d5
 author: "rothja"
 ms.author: "jroth"
-monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||=sqlallproducts-allversions||>=sql-server-linux-2017||=azuresqldb-mi-current"
+monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current"
 ---
 # Memory Management Architecture Guide
 
@@ -75,7 +75,7 @@ By using AWE and the Locked Pages in Memory privilege, you can provide the follo
 <sup>6</sup> If lock pages in memory privilege (LPIM) is granted (either on 32-bit for AWE support or on 64-bit by itself), we recommend also setting max server memory. For more information on LPIM, refer to [Server Memory Server Configuration Options](../database-engine/configure-windows/server-memory-server-configuration-options.md#lock-pages-in-memory-lpim)
 
 > [!NOTE]
-> Older versions of [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] could run on a 32-bit operating system. Accessing more than 4 gigabytes (GB) of memory on a 32-bit operating system required Address Windowing Extensions (AWE) to manage the memory. This is not necessary when [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] is running on 64-bit operation systems. For more information about AWE, see [Process Address Space](https://msdn.microsoft.com/library/ms189334.aspx) and [Managing Memory for Large Databases](https://msdn.microsoft.com/library/ms191481.aspx) in the [!INCLUDE[ssKatmai](../includes/ssKatmai-md.md)] documentation.   
+> Older versions of [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] could run on a 32-bit operating system. Accessing more than 4 gigabytes (GB) of memory on a 32-bit operating system required Address Windowing Extensions (AWE) to manage the memory. This is not necessary when [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] is running on 64-bit operation systems. For more information about AWE, see [Process Address Space](/previous-versions/sql/sql-server-2008-r2/ms189334(v=sql.105)) and [Managing Memory for Large Databases](/previous-versions/sql/sql-server-2008-r2/ms191481(v=sql.105)) in the [!INCLUDE[ssKatmai](../includes/ssKatmai-md.md)] documentation.   
 
 <a name="changes-to-memory-management-starting-2012-11x-gm"></a>
 
@@ -92,7 +92,7 @@ Starting with [!INCLUDE[ssSQL11](../includes/sssql11-md.md)],  Single-Page alloc
 
 > [!IMPORTANT]
 > Carefully review your current *max server memory (MB)* and *min server memory (MB)* configurations after you upgrade to [!INCLUDE[ssSQL11](../includes/sssql11-md.md)] through [!INCLUDE[ssCurrent](../includes/sscurrent-md.md)]. This is because starting in [!INCLUDE[ssSQL11](../includes/sssql11-md.md)], such configurations now include and account for more memory allocations compared to earlier versions. 
-> These changes apply to both 32-bit and 64-bit versions of [!INCLUDE[ssSQL11](../includes/sssql11-md.md)] and [!INCLUDE[ssSQL14](../includes/sssql14-md.md)], and 64-bit versions of [!INCLUDE[ssSQL15](../includes/sssql15-md.md)] through [!INCLUDE[ssCurrent](../includes/sscurrent-md.md)].
+> These changes apply to both 32-bit and 64-bit versions of [!INCLUDE[ssSQL11](../includes/sssql11-md.md)] and [!INCLUDE[ssSQL14](../includes/sssql14-md.md)], and 64-bit versions of [!INCLUDE[sssql15-md](../includes/sssql16-md.md)] through [!INCLUDE[ssCurrent](../includes/sscurrent-md.md)].
 
 The following table indicates whether a specific type of memory allocation is controlled by the *max server memory (MB)* and *min server memory (MB)* configuration options:
 
@@ -337,9 +337,9 @@ CMemThread is a thread-safe memory object type that allows concurrent memory all
 However, the use of mutexes can lead to contention if many threads are allocating from the same memory object in a highly concurrent fashion. Therefore, [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] has the concept of partitioned memory objects (PMO) and each partition is represented by a single CMemThread object. The partitioning of a memory object is statically defined and cannot be changed after creation. As memory allocation patterns vary widely based on aspects like hardware and memory usage, it is impossible to come up with the perfect partitioning pattern upfront. In the vast majority of cases, using a single partition will suffice, but in some scenarios this may lead to contention which can be prevented only with a highly partitioned memory object. It is not desirable to partition each memory object as more partitions may result in other inefficiencies and increase memory fragmentation.
 
 > [!NOTE]
-> Before [!INCLUDE[ssSQL15](../includes/sssql15-md.md)], trace flag 8048 could be used to force a node-based PMO to become a CPU-based PMO. Starting with [!INCLUDE[ssSQL14](../includes/sssql14-md.md)] SP2 and [!INCLUDE[ssSQL15](../includes/sssql15-md.md)], this behavior is dynamic and controlled by the engine.
+> Before [!INCLUDE[sssql15-md](../includes/sssql16-md.md)], trace flag 8048 could be used to force a node-based PMO to become a CPU-based PMO. Starting with [!INCLUDE[ssSQL14](../includes/sssql14-md.md)] SP2 and [!INCLUDE[sssql15-md](../includes/sssql16-md.md)], this behavior is dynamic and controlled by the engine.
 
-Starting with [!INCLUDE[ssSQL14](../includes/sssql14-md.md)] SP2 and [!INCLUDE[ssSQL15](../includes/sssql15-md.md)], the [!INCLUDE[ssde_md](../includes/ssde_md.md)] can dynamically detect contention on a specific CMemThread object and promote the object to a per-node or a per-CPU based implementation. Once promoted, the PMO remains promoted until the [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] process is restarted. CMemThread contention can be detected by the presence of high CMEMTHREAD waits in the [sys.dm_os_wait_stats](../relational-databases/system-dynamic-management-views/sys-dm-os-wait-stats-transact-sql.md) DMV, and by observing the [sys.dm_os_memory_objects](../relational-databases/system-dynamic-management-views/sys-dm-os-memory-objects-transact-sql.md) DMV columns *contention_factor*, *partition_type*, *exclusive_allocations_count*, and *waiting_tasks_count*.
+Starting with [!INCLUDE[ssSQL14](../includes/sssql14-md.md)] SP2 and [!INCLUDE[sssql15-md](../includes/sssql16-md.md)], the [!INCLUDE[ssde_md](../includes/ssde_md.md)] can dynamically detect contention on a specific CMemThread object and promote the object to a per-node or a per-CPU based implementation. Once promoted, the PMO remains promoted until the [!INCLUDE[ssNoVersion](../includes/ssnoversion-md.md)] process is restarted. CMemThread contention can be detected by the presence of high CMEMTHREAD waits in the [sys.dm_os_wait_stats](../relational-databases/system-dynamic-management-views/sys-dm-os-wait-stats-transact-sql.md) DMV, and by observing the [sys.dm_os_memory_objects](../relational-databases/system-dynamic-management-views/sys-dm-os-memory-objects-transact-sql.md) DMV columns *contention_factor*, *partition_type*, *exclusive_allocations_count*, and *waiting_tasks_count*.
 
 ## See Also
 [Server Memory Server Configuration Options](../database-engine/configure-windows/server-memory-server-configuration-options.md)   

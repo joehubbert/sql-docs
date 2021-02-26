@@ -1,8 +1,8 @@
 ---
 title: Create and configure an availability group for SQL Server on Linux
 description: This tutorial shows how to create and configure availability groups for SQL Server on Linux, as well as create availability group endpoints and certificates.
-author: MikeRayMSFT
-ms.author: mikeray
+author: VanMSFT
+ms.author: vanto
 ms.reviewer: vanto
 ms.date: 06/28/2018
 ms.topic: conceptual
@@ -14,7 +14,7 @@ ms.technology: linux
 
 [!INCLUDE [SQL Server - Linux](../includes/applies-to-version/sql-linux.md)]
 
-This tutorial covers how to create and configure an availability group (AG) for [!INCLUDE[ssnoversion-md](../includes/ssnoversion-md.md)] on Linux. Unlike [!INCLUDE[sssql15-md](../includes/sssql15-md.md)] and earlier on Windows, you can enable AGs with or without creating the underlying Pacemaker cluster first. Integration with the cluster, if needed, is not done until later.
+This tutorial covers how to create and configure an availability group (AG) for [!INCLUDE[ssnoversion-md](../includes/ssnoversion-md.md)] on Linux. Unlike [!INCLUDE[sssql15-md](../includes/sssql16-md.md)] and earlier on Windows, you can enable AGs with or without creating the underlying Pacemaker cluster first. Integration with the cluster, if needed, is not done until later.
 
 The tutorial includes the following tasks:
  

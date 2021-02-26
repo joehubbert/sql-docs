@@ -20,7 +20,7 @@ helpviewer_keywords:
 ms.assetid: 32dfe254-6df7-4437-bfd6-ca7d37557b0a
 author: ronortloff
 ms.author: rortloff
-monikerRange: ">= aps-pdw-2016 || = azure-sqldw-latest || = sqlallproducts-allversions"
+monikerRange: ">= aps-pdw-2016 || = azure-sqldw-latest"
 ---
 # CREATE EXTERNAL TABLE AS SELECT (Transact-SQL)
 [!INCLUDE[applies-to-version/asa-pdw](../../includes/applies-to-version/asa-pdw.md)]
@@ -166,6 +166,8 @@ As a prerequisite for creating an external table, the appliance administrator ne
 
  CREATE TABLE, DROP TABLE, CREATE STATISTICS, DROP STATISTICS, CREATE VIEW, and DROP VIEW are the only data definition language (DDL) operations allowed on external tables.
 
+ External tables for serverless SQL pool cannot be created in a location where you currently have data. To reuse a location that has been used to store data, the location must be manually deleted on ADLS.
+
  PolyBase can consume a maximum of 33,000 files per folder when running 32 concurrent PolyBase queries. This maximum number includes both files and subfolders in each HDFS folder. If the degree of concurrency is less than 32, a user can run PolyBase queries against folders in HDFS that contain more than 33,000 files. We recommend that users of Hadoop and PolyBase keep file paths short and use no more than 30,000 files per HDFS folder. When too many files are referenced, a JVM out-of-memory exception occurs.
 
  [SET ROWCOUNT &#40;Transact-SQL&#41;](../../t-sql/statements/set-rowcount-transact-sql.md) has no effect on this CREATE EXTERNAL TABLE AS SELECT. To achieve a similar behavior, use [TOP &#40;Transact-SQL&#41;](../../t-sql/queries/top-transact-sql.md).
@@ -180,7 +182,7 @@ CREATE EXTERNAL TABLE AS SELECT to Parquet or ORC files will cause errors, which
 - /r
 - /n
 
-To use CREATE EXTERNAL TABLE AS SELECT containing these characters, you must first CREATE EXTERNAL TABLE AS SELECT the data to delimited text files where you can then convert them to Parquet or ORC by using an external tool.
+To use CREATE EXTERNAL TABLE AS SELECT containing these characters, you must first run the CREATE EXTERNAL TABLE AS SELECT statement to export the data to delimited text files where you can then convert them to Parquet or ORC by using an external tool.
 
 ## Locking
  Takes a shared lock on the SCHEMARESOLUTION object.

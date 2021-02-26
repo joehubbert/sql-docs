@@ -13,9 +13,9 @@ helpviewer_keywords:
   - "CE (cardinality estimator)"
   - "estimating cardinality"
 ms.assetid: baa8a304-5713-4cfe-a699-345e819ce6df
-author: julieMSFT
-ms.author: jrasnick
-monikerRange: "=azuresqldb-current||>=sql-server-2016||=sqlallproducts-allversions||>=sql-server-linux-2017||=azuresqldb-mi-current"
+author: WilliamDAssafMSFT
+ms.author: wiassaf
+monikerRange: "=azuresqldb-current||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current"
 ---
 
 # Cardinality Estimation (SQL Server)
@@ -93,7 +93,7 @@ WHERE name = 'LEGACY_CARDINALITY_ESTIMATION';
 GO
 ```  
  
-Or starting with [!INCLUDE[ssSQL15](../../includes/sssql15-md.md)] SP1, the [Query Hint](../../t-sql/queries/hints-transact-sql-query.md#use_hint) `USE HINT ('FORCE_LEGACY_CARDINALITY_ESTIMATION')`.
+Or starting with [!INCLUDE[sssql16-md](../../includes/sssql16-md.md)] SP1, the [Query Hint](../../t-sql/queries/hints-transact-sql-query.md#use_hint) `USE HINT ('FORCE_LEGACY_CARDINALITY_ESTIMATION')`.
  
  ```sql  
 SELECT CustomerId, OrderAddedDate  
@@ -102,7 +102,7 @@ WHERE OrderAddedDate >= '2016-05-01'
 OPTION (USE HINT ('FORCE_LEGACY_CARDINALITY_ESTIMATION'));  
 ```
  
-**Query store:** Starting with [!INCLUDE[ssSQL15](../../includes/sssql15-md.md)], the query store is a handy tool for examining the performance of your queries. In [!INCLUDE[ssManStudio](../../includes/ssManStudio-md.md)], in the **Object Explorer** under your database node, a **Query Store** node is displayed when the query store is enabled.  
+**Query store:** Starting with [!INCLUDE[sssql16-md](../../includes/sssql16-md.md)], the query store is a handy tool for examining the performance of your queries. In [!INCLUDE[ssManStudio](../../includes/ssManStudio-md.md)], in the **Object Explorer** under your database node, a **Query Store** node is displayed when the query store is enabled.  
   
 ```sql  
 ALTER DATABASE <yourDatabase>  
@@ -154,7 +154,7 @@ STATE = START;  --STOP;
 GO  
 ```  
   
-For information about extended events as tailored for [!INCLUDE[ssSDS](../../includes/sssds-md.md)], see [Extended events in SQL Database](https://azure.microsoft.com/documentation/articles/sql-database-xevent-db-diff-from-svr/).  
+For information about extended events as tailored for [!INCLUDE[ssSDS](../../includes/sssds-md.md)], see [Extended events in SQL Database](/azure/azure-sql/database/xevent-db-diff-from-svr).  
   
 ## Steps to assess the CE version  
   
@@ -285,9 +285,9 @@ WHERE s.ticket = r.ticket AND
   
 ## See Also  
  [Monitor and Tune for Performance](../../relational-databases/performance/monitor-and-tune-for-performance.md)   
- [Optimizing Your Query Plans with the SQL Server 2014 Cardinality Estimator](https://msdn.microsoft.com/library/dn673537.aspx)  
+ [Optimizing Your Query Plans with the SQL Server 2014 Cardinality Estimator](/previous-versions/dn673537(v=msdn.10))  
  [Query Hints](../../t-sql/queries/hints-transact-sql-query.md)     
  [USE HINT Query Hints](../../t-sql/queries/hints-transact-sql-query.md#use_hint)       
  [Upgrading Databases by using the Query Tuning Assistant](../../relational-databases/performance/upgrade-dbcompat-using-qta.md)           
  [Monitoring Performance By Using the Query Store](../../relational-databases/performance/monitoring-performance-by-using-the-query-store.md)    
- [Query Processing Architecture Guide](../../relational-databases/query-processing-architecture-guide.md)   
+ [Query Processing Architecture Guide](../../relational-databases/query-processing-architecture-guide.md)

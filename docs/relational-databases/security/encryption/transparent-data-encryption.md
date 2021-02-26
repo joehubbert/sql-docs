@@ -18,7 +18,7 @@ ms.assetid: c75d0d4b-4008-4e71-9a9d-cee2a566bd3b
 author: jaszymas
 ms.author: jaszymas
 ms.reviewer: vanto
-monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||=sqlallproducts-allversions||>=sql-server-linux-2017||=azuresqldb-mi-current"
+monikerRange: ">=aps-pdw-2016||=azuresqldb-current||=azure-sqldw-latest||>=sql-server-2016||>=sql-server-linux-2017||=azuresqldb-mi-current"
 ---
 
 # Transparent Data Encryption (TDE)
@@ -46,12 +46,12 @@ TDE protects data at rest, which is the data and log files. It lets you follow m
 >
 >**Related topics:**
 >
-> - [Transparent Data Encryption with Azure SQL Database](../../../relational-databases/security/encryption/transparent-data-encryption-azure-sql.md)
-> - [Get started with Transparent Data Encryption (TDE) on SQL Data Warehouse](https://azure.microsoft.com/documentation/articles/sql-data-warehouse-encryption-tde-tsql/)
+> - [Transparent Data Encryption with Azure SQL Database](/azure/azure-sql/database/transparent-data-encryption-tde-overview)
+> - [Get started with Transparent Data Encryption (TDE) in Azure Synapse Analytics](/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-encryption-tde-tsql)
 > - [Move a TDE Protected Database to Another SQL Server](../../../relational-databases/security/encryption/move-a-tde-protected-database-to-another-sql-server.md)
 > - [Enable TDE on SQL Server Using EKM](../../../relational-databases/security/encryption/enable-tde-on-sql-server-using-ekm.md)
 > - [Use SQL Server Connector with SQL Encryption Features](../../../relational-databases/security/encryption/use-sql-server-connector-with-sql-encryption-features.md)
-> - [The SQL Server Security Blog on TDE with FAQ](https://blogs.msdn.microsoft.com/sqlsecurity/2016/10/05/feature-spotlight-transparent-data-encryption-tde/)
+> - [The SQL Server Security Blog on TDE with FAQ](/archive/blogs/sqlsecurity/feature-spotlight-transparent-data-encryption-tde)
 
 ## About TDE
 
@@ -59,7 +59,7 @@ Encryption of a database file is done at the page level. The pages in an encrypt
 
 ### Information applicable to [!INCLUDE[ssSDS](../../../includes/sssds-md.md)]
 
-When you use TDE with [!INCLUDE[sqldbesa](../../../includes/sqldbesa-md.md)] V12, [!INCLUDE[ssSDS](../../../includes/sssds-md.md)] automatically creates for you the server-level certificate stored in the master database. To move a TDE database on [!INCLUDE[ssSDS](../../../includes/sssds-md.md)], you don't have to decrypt the database for the move operation. For more information on using TDE with [!INCLUDE[ssSDS](../../../includes/sssds-md.md)], see [Transparent Data Encryption with Azure SQL Database](../../../relational-databases/security/encryption/transparent-data-encryption-azure-sql.md).
+When you use TDE with [!INCLUDE[sqldbesa](../../../includes/sqldbesa-md.md)] V12, [!INCLUDE[ssSDS](../../../includes/sssds-md.md)] automatically creates for you the server-level certificate stored in the master database. To move a TDE database on [!INCLUDE[ssSDS](../../../includes/sssds-md.md)], you don't have to decrypt the database for the move operation. For more information on using TDE with [!INCLUDE[ssSDS](../../../includes/sssds-md.md)], see [Transparent Data Encryption with Azure SQL Database](/azure/azure-sql/database/transparent-data-encryption-tde-overview).
 
 ### Information applicable to [!INCLUDE[ssNoVersion](../../../includes/ssnoversion-md.md)]
 
@@ -222,7 +222,7 @@ To encrypt a database encryption key with an asymmetric key, the asymmetric key 
 
 To enable TDE on a database, [!INCLUDE[ssNoVersion](../../../includes/ssnoversion-md.md)] must do an encryption scan. The scan reads each page from the data files into the buffer pool and then writes the encrypted pages back out to disk.
 
-To give you more control over the encryption scan, [!INCLUDE[sql-server-2019](../../../includes/sssqlv15-md.md)] introduces TDE scan, which has a suspend and resume syntax. You can pause the scan while the workload on the system is heavy or during business-critical hours and then resume the scan later.
+To give you more control over the encryption scan, [!INCLUDE[sql-server-2019](../../../includes/sssql19-md.md)] introduces TDE scan, which has a suspend and resume syntax. You can pause the scan while the workload on the system is heavy or during business-critical hours and then resume the scan later.
 
 Use the following syntax to pause the TDE encryption scan:
 
@@ -309,7 +309,7 @@ When you encrypt a database using TDE, files related to buffer pool extension (B
 
 ## TDE and In-Memory OLTP
 
-You can enable TDE on a database that has In-Memory OLTP objects. In [!INCLUDE[ssSQL15](../../../includes/sssql15-md.md)] and [!INCLUDE[ssSDSfull](../../../includes/sssdsfull-md.md)], In-Memory OLTP log records and data are encrypted if you enable TDE. In [!INCLUDE[ssSQL14](../../../includes/sssql14-md.md)], In-Memory OLTP log records are encrypted if you enable TDE, but files in the MEMORY_OPTIMIZED_DATA filegroup are unencrypted.
+You can enable TDE on a database that has In-Memory OLTP objects. In [!INCLUDE[sssql16-md](../../../includes/sssql16-md.md)] and [!INCLUDE[ssSDSfull](../../../includes/sssdsfull-md.md)], In-Memory OLTP log records and data are encrypted if you enable TDE. In [!INCLUDE[ssSQL14](../../../includes/sssql14-md.md)], In-Memory OLTP log records are encrypted if you enable TDE, but files in the MEMORY_OPTIMIZED_DATA filegroup are unencrypted.
 
 ## Related tasks
 
@@ -319,12 +319,12 @@ You can enable TDE on a database that has In-Memory OLTP objects. In [!INCLUDE[s
 
 ## Related content
 
-[Transparent Data Encryption with Azure SQL Database](../../../relational-databases/security/encryption/transparent-data-encryption-azure-sql.md)  
-[Get started with Transparent Data Encryption (TDE) on SQL Data Warehouse](https://azure.microsoft.com/documentation/articles/sql-data-warehouse-encryption-tde-tsql/)  
+[Transparent Data Encryption with Azure SQL Database](/azure/azure-sql/database/transparent-data-encryption-tde-overview)  
+[Get started with Transparent Data Encryption (TDE) in Azure Synapse Analytics](/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-encryption-tde-tsql)  
 [SQL Server Encryption](../../../relational-databases/security/encryption/sql-server-encryption.md)  
 [SQL Server and Database Encryption Keys (Database Engine)](../../../relational-databases/security/encryption/sql-server-and-database-encryption-keys-database-engine.md)  
 
 ## See also
 
 [Security Center for SQL Server Database Engine and Azure SQL Database](../../../relational-databases/security/security-center-for-sql-server-database-engine-and-azure-sql-database.md)  
-[FILESTREAM (SQL Server)](../../../relational-databases/blob/filestream-sql-server.md)  
+[FILESTREAM (SQL Server)](../../../relational-databases/blob/filestream-sql-server.md)
